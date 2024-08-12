@@ -28,29 +28,17 @@ jobs:
         continue-on-error: true
         run: terraform plan -input=false -no-color
 
-      - name: Post Plan to GitHub PR
-        if: github.ref != 'refs/heads/main'
-        uses: mshick/add-pr-comment@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          repo-token-user-login: 'github-actions[bot]'
-          message: |
-            Applying:
-
-            ```
-            ${{ steps.plan.outputs.stdout }}
-            ```
-
       - name: Apply Terraform
         if: github.ref == 'refs/heads/main'
         id: apply
         continue-on-error: true
-        run: |
-          terraform apply -auto-approve
+        run: terraform apply -auto-approve
 
-      - name: commit the terraform state
+      - name: Commit the Terraform State
         if: github.ref == 'refs/heads/main'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Updating Terraform state
           file_pattern: terraform.tfstate
+        env:
+          GIT_AUTH_TOKEN: ${{ secrets.PAT_TOKEN }}
