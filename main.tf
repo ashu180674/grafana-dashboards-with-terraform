@@ -10,5 +10,5 @@ terraform {
 provider "grafana" {
   alias = "cloud"
   url   = "https://ashutoshtripathi1806.grafana.net"
-  auth  = "glsa_KcNqweHFhtQOWemkx3J2NmH8w6ICDmzL_82177ff3"
+  auth  = "glsa_KW9gZpB1UTn9n1MGjcuvWJ8CFI3BzAH1_8cb59580"
 }
